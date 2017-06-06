@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="arm64-v8a,armeabi-v7a,armeabi"
+    api-level="25"
+    density="420dpi"
+    format="7"
+    timestamp="972079014424908"
+    token="-1537912013176174388" >
+
+    <task
+        name="javac"
+        duration="126" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="40" />
+    <task
+        name="verifier"
+        duration="2" />
+
+    <artifact
+        location="C:\Users\Jason\Desktop\Geometry Chaos\android\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
+        type="DEX" />
+
+    <build timestamp="968810085478336" >
+        <artifact
+            location="C:\Users\Jason\Desktop\Geometry Chaos\android\build\outputs\apk\android-debug.apk"
+            type="MAIN" />
+    </build>
+    <build timestamp="970630480753974" >
+        <artifact
+            location="C:\Users\Jason\Desktop\Geometry Chaos\android\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="971935951320824" >
+        <artifact
+            location="C:\Users\Jason\Desktop\Geometry Chaos\android\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="972079014424908" >
+        <artifact
+            location="C:\Users\Jason\Desktop\Geometry Chaos\android\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>
