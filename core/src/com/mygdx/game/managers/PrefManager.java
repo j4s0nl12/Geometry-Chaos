@@ -2,11 +2,8 @@ package com.mygdx.game.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.mygdx.game.main.GeometryChaos;
 
 public class PrefManager {
-
-    final GeometryChaos game;
 
     private static Preferences pref;
     private final static String PREF_NAME = "mygame_pref";
@@ -14,22 +11,25 @@ public class PrefManager {
     private static float volume_offset = 0.2f;
 
     private static float master_volume;
+    private static float default_master_volume = 1f;
     private static String master_volume_str = "master_volume";
     private static float bg_volume;
+    private static float default_bg_volume = 1f;
     private static String bg_volume_str = "bg_volume";
     private static float sfx_volume;
+    private static float default_sfx_volume = 1f;
     private static String sfx_volume_str = "sfx_volume";
 
-    private static boolean gameInProgress;
+    private static boolean hideCpads = true;
+    private static boolean default_hideCpads = false;
+    private static String hideCpads_str = "hide_cpads";
 
-    public PrefManager(final GeometryChaos gam){
-        game = gam;
+    public PrefManager(){
         pref = Gdx.app.getPreferences(PREF_NAME);
         init();
     }
 
     private void init(){
-
         //Master Volume
         if(!pref.contains(master_volume_str)){
 
@@ -52,11 +52,7 @@ public class PrefManager {
         }
     }
 
-    public boolean getIsGameInProgress(){
-        return gameInProgress;
-    }
-
-    public String getPrefName(){
-        return PREF_NAME;
+    public static boolean getHideCpads(){
+        return hideCpads;
     }
 }

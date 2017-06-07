@@ -1,8 +1,11 @@
 package com.mygdx.game.ui;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 
@@ -15,6 +18,8 @@ public class CirclePad {
     private Touchpad tp;
     private Skin skin;
 
+    private InputEvent fakeInputEvent;
+
     public CirclePad(float x, float y, float size){
         this.skin = new Skin(Gdx.files.internal(DIR + JSON));
         this.skin.addRegions(new TextureAtlas(DIR + ATLAS));
@@ -22,6 +27,11 @@ public class CirclePad {
         this.tp.setOrigin(x,y);
         this.tp.setSize(size,size);
         this.tp.setPosition(x - this.tp.getWidth()/2, y - this.tp.getHeight()/2);
+        this.fakeInputEvent = new InputEvent();
+        this.fakeInputEvent.setType(Type.touchDown);
+        if(!Gdx.app.getType().equals(Application.ApplicationType.Android)) {
+            //this.setVisibile(false);
+        }
     }
 
     public Touchpad getTouchpad(){
@@ -42,5 +52,29 @@ public class CirclePad {
 
     public float getPercentY(){
         return this.tp.getKnobPercentY();
+    }
+
+    public void setPosition(float x, float y){
+        this.tp.setOrigin(x,y);
+        this.tp.setPosition(x - this.tp.getWidth()/2, y - this.tp.getHeight()/2);
+    }
+
+    public void setPosition(Vector2 pos){
+        this.setPosition(pos.x, pos.y);
+    }
+
+    public void fire(float x, float y, int pointer){
+        this.fakeInputEvent.setPointer(pointer);
+        this.fakeInputEvent.setStageX(x);
+        this.fakeInputEvent.setStageY(y);
+        this.tp.fire(this.fakeInputEvent);
+    }
+
+    public void fire(Vector2 pos, int pointer){
+        this.fire(pos.x,pos.y, pointer);
+    }
+
+    public void setVisibile(boolean isVisible){
+        this.tp.setVisible(isVisible);
     }
 }

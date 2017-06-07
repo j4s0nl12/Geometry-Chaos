@@ -3,9 +3,9 @@ package com.mygdx.game.managers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.objects.BaseGameObject;
 import com.mygdx.game.objects.player.Player;
+import com.mygdx.game.utility.GameConstants;
 import com.mygdx.game.utility.QuadTree;
 
 import java.util.Iterator;
@@ -18,7 +18,7 @@ public class GameObjectManager {
 
     public GameObjectManager(){
         olist = new Array();
-        quad = new QuadTree(0, 0, 0, GeometryChaos.getWidth(), GeometryChaos.getHeight());
+        quad = new QuadTree(0, 0, 0, GameConstants.getVirtualWidth(), GameConstants.getVirtualHeight());
     }
 
     public void update(float delta){

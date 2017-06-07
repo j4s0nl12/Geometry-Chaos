@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.main.GeometryChaos;
+import com.mygdx.game.utility.GameConstants;
 import com.mygdx.game.utility.Utility;
 
 public class BaseGameObject implements Comparable<BaseGameObject>{
@@ -220,24 +220,29 @@ public class BaseGameObject implements Comparable<BaseGameObject>{
     }
 
     public void simpleBorder(){
-        if(this.getPosX() < 0){
-            this.setPosX(0);
+        if(this.getPosX() < GameConstants.getGameWorldX()){
+            this.setPosX(GameConstants.getGameWorldX());
             this.setVelX(0);
-        }else if(this.getPosX() > GeometryChaos.getWidth() - this.getWidth()){
-            this.setPosX(GeometryChaos.getWidth() - this.getWidth());
+        }else if(this.getPosX() > GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth() - this.getWidth()){
+            this.setPosX(GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth() - this.getWidth());
             this.setVelX(0);
         }
-        if(this.getPosY() < 0){
-            this.setPosY(0);
+        if(this.getPosY() < GameConstants.getGameWorldY()){
+            this.setPosY(GameConstants.getGameWorldY());
             this.setVelY(0);
-        }else if(this.getPosY() > GeometryChaos.getHeight() - this.getHeight()){
-            this.setPosY(GeometryChaos.getHeight() - this.getHeight());
+        }else if(this.getPosY() > GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight() - this.getHeight()){
+            this.setPosY(GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight() - this.getHeight());
             this.setVelY(0);
         }
         this.sprite.setPosition(this.pos.x, this.pos.y);
     }
 
     public void outOfBorder(){
-
+        if((this.getPosX() < GameConstants.getGameWorldX()) ||
+           (this.getPosX() > GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth() - this.getWidth()) ||
+           (this.getPosY() < GameConstants.getGameWorldY()) ||
+           (this.getPosY() > GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight() - this.getHeight())){
+            this.toDestroy = true;
+        }
     }
 }

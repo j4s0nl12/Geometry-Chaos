@@ -1,56 +1,35 @@
 package com.mygdx.game.main;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.managers.ScreenManager;
-import com.mygdx.game.utility.Camera;
+import com.mygdx.game.utility.GameConstants;
 
 public class GeometryChaos extends Game {
 
-	private static int GAME_WORLD_WIDTH = 1600;
-	private static int GAME_WORLD_HEIGHT = 900;
-
-	private static Camera camera;
+	public static OrthographicCamera camera;
+	public static Viewport viewport;
+	public static SpriteBatch batch;
 	private static ScreenManager sm;
-	private static SpriteBatch batch;
 
 	@Override
 	public void create() {
-		camera = new Camera(this.getWidth(), this.getHeight());
-		sm = new ScreenManager(this);
 		batch = new SpriteBatch();
-	}
-
-	public void update(){
-		camera.update();
-		batch.setProjectionMatrix(camera.combined());
+		camera = new OrthographicCamera();
+		viewport = new ExtendViewport(GameConstants.getVirtualWidth(), GameConstants.getVirtualHeight(), camera);
+		sm = new ScreenManager(this);
+		sm.goToScreen(sm.GAMESCREEN);
 	}
 
 	public void resize(int width, int height){
-		camera.resize(width, height);
+		viewport.update(width, height, true);
 	}
 
+	@Override
 	public void dispose(){
-		this.batch.dispose();
-	}
-
-	public ScreenManager getSM(){
-		return sm;
-	}
-
-	public Camera getCamera(){
-		return camera;
-	}
-
-	public SpriteBatch getBatch(){
-		return batch;
-	}
-
-	public static int getWidth(){
-		return GAME_WORLD_WIDTH;
-	}
-
-	public static int getHeight(){
-		return GAME_WORLD_HEIGHT;
+		batch.dispose();
 	}
 }

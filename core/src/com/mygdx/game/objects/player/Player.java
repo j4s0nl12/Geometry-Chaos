@@ -6,16 +6,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.main.GeometryChaos;
+import com.mygdx.game.managers.PrefManager;
 import com.mygdx.game.objects.BaseGameObject;
-import com.mygdx.game.utility.Camera;
+import com.mygdx.game.ui.CirclePad;
+import com.mygdx.game.utility.GameConstants;
+import com.mygdx.game.utility.Utility;
 
 public class Player extends BaseGameObject{
 
     private Array<Actor> actorList;
 
-    private com.mygdx.game.ui.CirclePad Lpad;
-    private com.mygdx.game.ui.CirclePad Rpad;
+    public CirclePad Lpad;
+    public CirclePad Rpad;
 
     private long lastShot;
     private long shotDelay;
@@ -31,12 +33,12 @@ public class Player extends BaseGameObject{
         this.setAccelIncr(this.getMaxAccel()*4f);
 
         //Circlepads
-        float size = 275f;
-        float leftX = GeometryChaos.getWidth()*4/30;
-        float rightX = GeometryChaos.getWidth() - leftX;
-        float height = GeometryChaos.getHeight()*7/30;
-        this.Lpad = new com.mygdx.game.ui.CirclePad(leftX, height, size);
-        this.Rpad = new com.mygdx.game.ui.CirclePad(rightX, height, size);
+        float size = 340f;
+        float leftX = GameConstants.getVirtualWidth()*.11f;
+        float rightX = GameConstants.getVirtualWidth() - leftX;
+        float height = GameConstants.getVirtualHeight()*.2f;
+        this.Lpad = new CirclePad(leftX, height, size);
+        this.Rpad = new CirclePad(rightX, height, size);
         this.actorList.add(this.Lpad.getTouchpad());
         this.actorList.add(this.Rpad.getTouchpad());
 
@@ -76,13 +78,22 @@ public class Player extends BaseGameObject{
             //shoot
         }else if(!Gdx.app.getType().equals(Application.ApplicationType.Android)){
             if(Gdx.input.isTouched() && !this.Lpad.isTouched()) {
-                Vector2 dir = Camera.getUnprojectAt(Gdx.input.getX(), Gdx.input.getY(), 0).sub(this.getCenterPos());
+                Vector2 dir = Utility.getUnprojectAt(Gdx.input.getX(), Gdx.input.getY(), 0).sub(this.getCenterPos());
                 this.setRotation(dir);
             }
         }
 
         if(!this.Lpad.isTouched() && !this.isKeyPressed){
             this.applyFrict(this.getAccelIncr()*2, delta);
+        }
+
+        if(PrefManager.getHideCpads()) {
+            if (!this.Lpad.isTouched()) {
+                this.Lpad.setVisibile(false);
+            }
+            if (!this.Rpad.isTouched()) {
+                this.Rpad.setVisibile(false);
+            }
         }
 
         super.update(delta);

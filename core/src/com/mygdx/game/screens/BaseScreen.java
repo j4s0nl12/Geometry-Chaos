@@ -8,10 +8,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.ui.FreeText;
-import com.mygdx.game.ui.Text;
+import com.mygdx.game.utility.GameConstants;
 import com.mygdx.game.utility.Utility;
 
 import java.text.SimpleDateFormat;
@@ -34,12 +35,14 @@ public class BaseScreen extends InputAdapter implements Screen{
 
     private ShapeRenderer sr;
 
+    private boolean debug = false;
+
     public BaseScreen(final GeometryChaos gam){
         this.game = gam;
         this.state = STATE_RUN;
         this.iM = new InputMultiplexer();
-        this.stage = new Stage(game.getCamera().getViewport());
-        this.time = new FreeText(GeometryChaos.getWidth()*99/100, GeometryChaos.getHeight()*49/50f, 40, "");
+        this.stage = new Stage(game.viewport);
+        this.time = new FreeText(GameConstants.getVirtualWidth()*99/100, GameConstants.getVirtualHeight()*49/50f, 40, "");
 
         this.sr = new ShapeRenderer();
     }
@@ -56,25 +59,28 @@ public class BaseScreen extends InputAdapter implements Screen{
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
-        if(this.compareState(STATE_RUN)) {
-            Gdx.gl.glClearColor(.05f, .05f, .05f,1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            game.update();
-            this.stage.act(delta);
 
-            this.sr.setProjectionMatrix(game.getCamera().combined());
-            this.sr.begin(ShapeRenderer.ShapeType.Line);
-            this.sr.setColor(1,1,1,1);
-            this.sr.rect(0, 0, GeometryChaos.getWidth(), GeometryChaos.getHeight());
-            this.sr.end();
+        Gdx.gl.glClearColor(.05f, .05f, .05f,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(this.compareState(STATE_RUN)) {
+            this.stage.act(delta);
         }
+
+        game.batch.setProjectionMatrix(game.camera.combined);
+
+        this.sr.setProjectionMatrix(game.camera.combined);
+        this.sr.begin(ShapeRenderer.ShapeType.Line);
+        this.sr.setColor(1,1,1,1);
+        this.sr.rect(GameConstants.getGameWorldX(), GameConstants.getGameWorldY(),
+                     GameConstants.getGameWorldWidth(), GameConstants.getGameWorldHeight());
+        this.sr.end();
     }
 
     public void displayTime(SpriteBatch batch){
         long t = System.currentTimeMillis();
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(t);
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mma");
         String curTime = sdf.format(cal.getTime());
         this.time.setText(curTime);
         this.time.draw(batch);
@@ -114,5 +120,23 @@ public class BaseScreen extends InputAdapter implements Screen{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button){
+        if(Utility.debug && this.debug){
+            Vector2 tmp = Utility.getUnprojectAt(screenX,screenY,0);
+            Gdx.app.log(this.TAG, "TouchDown at (" + tmp.x + "," + tmp.y + ").");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer){
+        if(Utility.debug && this.debug){
+            Vector2 tmp = Utility.getUnprojectAt(screenX, screenY, 0);
+            Gdx.app.log(this.TAG, "TouchDragged at (" + tmp.x + "," + tmp.y + ").");
+        }
+        return true;
     }
 }
