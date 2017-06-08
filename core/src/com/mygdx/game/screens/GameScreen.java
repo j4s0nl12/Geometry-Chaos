@@ -1,7 +1,7 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.main.GeometryChaos;
@@ -18,7 +18,7 @@ public class GameScreen extends BaseScreen{
         super(gam);
         gom = new GameObjectManager();
         gom.addPlayer(GameConstants.getVirtualWidth()/2,GameConstants.getVirtualHeight()/2);
-        for(Actor a : gom.getPlayer().getActorList()){
+        for(Actor a : gom.getPlayerController().getActors()){
             this.stage.addActor(a);
         }
     }
@@ -30,11 +30,13 @@ public class GameScreen extends BaseScreen{
             gom.update(delta);
         }
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.Q)){
+            PrefManager.setLockCpads(!PrefManager.getLockCpads());
+        }
+
         game.batch.begin();
         gom.draw(game.batch);
-        for(Actor a : this.stage.getActors()){
-            a.draw(game.batch,1f);
-        }
+        gom.getPlayerController().draw(game.batch);
         this.displayTime(game.batch);
         game.batch.end();
     }
@@ -42,26 +44,24 @@ public class GameScreen extends BaseScreen{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button){
         super.touchDown(screenX, screenY, pointer, button);
-        if(Gdx.app.getType().equals(Application.ApplicationType.Android)) {
-            Vector2 mPos = Utility.getUnprojectAt(screenX, screenY, 0);
-            System.out.println(pointer);
+        //Change Cpad position
+        Vector2 mPos = Utility.getUnprojectAt(screenX, screenY, 0);
+        if(!PrefManager.getLockCpads()){
             if (mPos.x < GameConstants.getVirtualWidth() / 2) {
-                if (!gom.getPlayer().Lpad.isTouched()) {
-                    gom.getPlayer().Lpad.setPosition(mPos);
+                if (!gom.getPlayerController().Lpad.isTouched()) {
+                    gom.getPlayerController().Lpad.setPosition(mPos);
                     if(PrefManager.getHideCpads()) {
-                        gom.getPlayer().Lpad.setVisibile(true);
+                        gom.getPlayerController().Lpad.setVisible(true);
                     }
-                    System.out.println(mPos);
-                    gom.getPlayer().Lpad.fire(mPos, pointer);
+                    gom.getPlayerController().Lpad.fire(mPos, pointer);
                 }
             } else if (mPos.x > GameConstants.getVirtualWidth() / 2) {
-                if (!gom.getPlayer().Rpad.isTouched()) {
-                    gom.getPlayer().Rpad.setPosition(mPos);
+                if (!gom.getPlayerController().Rpad.isTouched()) {
+                    gom.getPlayerController().Rpad.setPosition(mPos);
                     if(PrefManager.getHideCpads()) {
-                        gom.getPlayer().Rpad.setVisibile(true);
+                        gom.getPlayerController().Rpad.setVisible(true);
                     }
-                    System.out.println(mPos);
-                    gom.getPlayer().Rpad.fire(mPos, pointer);
+                    gom.getPlayerController().Rpad.fire(mPos, pointer);
                 }
             }
         }

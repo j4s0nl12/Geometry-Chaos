@@ -3,10 +3,12 @@ package com.mygdx.game.managers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.objects.BaseGameObject;
 import com.mygdx.game.objects.player.Player;
 import com.mygdx.game.utility.GameConstants;
 import com.mygdx.game.utility.QuadTree;
+import com.mygdx.game.utility.Utility;
 
 import java.util.Iterator;
 
@@ -14,7 +16,7 @@ public class GameObjectManager {
 
     private Array<BaseGameObject> olist;
     private QuadTree quad;
-    int playerIdx;
+    private PlayerController player;
 
     public GameObjectManager(){
         olist = new Array();
@@ -30,6 +32,8 @@ public class GameObjectManager {
             }
         }
 
+        player.update(delta);
+
         for(BaseGameObject o : this.olist){
             o.update(delta);
         }
@@ -40,9 +44,6 @@ public class GameObjectManager {
     public void draw(SpriteBatch batch){
         olist.sort();
         for(int i = 0; i < olist.size; i++){
-            if(olist.get(i).getClass().getSimpleName().equals("Player")){
-                playerIdx = i;
-            }
             olist.get(i).draw(batch);
         }
     }
@@ -52,11 +53,15 @@ public class GameObjectManager {
     }
 
     public void addPlayer(float x, float y){
-        playerIdx = this.olist.size;
-        add(new Player(new Vector2(x,y), new Vector2()));
+        if(this.player == null) {
+            add(new Player(new Vector2(x, y), new Vector2()));
+            this.player = new PlayerController((Player) this.olist.get(this.olist.size - 1));
+        }else{
+            Utility.print("GOM","Error: Player already initialized!");
+        }
     }
 
-    public Player getPlayer(){
-        return (Player) olist.get(playerIdx);
+    public PlayerController getPlayerController(){
+        return this.player;
     }
 }

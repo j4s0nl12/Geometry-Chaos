@@ -1,5 +1,6 @@
 package com.mygdx.game.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -102,7 +103,7 @@ public class BaseGameObject implements Comparable<BaseGameObject>{
 
     public void setSprite(String imgFile){
         if(this.sprite == null) {
-            this.sprite = new Sprite(new Texture(imgFile));
+            this.sprite = new Sprite(new Texture(Gdx.files.internal(imgFile)));
             this.pos.sub(this.sprite.getWidth()/2, this.sprite.getHeight()/2);
             this.setSpritePos(this.pos);
         }else{

@@ -1,13 +1,14 @@
 package com.mygdx.game.ui;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.mygdx.game.managers.PrefManager;
 
 public class CirclePad {
 
@@ -29,9 +30,14 @@ public class CirclePad {
         this.tp.setPosition(x - this.tp.getWidth()/2, y - this.tp.getHeight()/2);
         this.fakeInputEvent = new InputEvent();
         this.fakeInputEvent.setType(Type.touchDown);
-        if(!Gdx.app.getType().equals(Application.ApplicationType.Android)) {
-            //this.setVisibile(false);
+        if(PrefManager.getHideCpads() && !PrefManager.getLockCpads()) {
+            this.setVisible(false);
         }
+    }
+
+    public void draw(SpriteBatch batch){
+        if(this.tp.isVisible())
+            this.tp.draw(batch, 1f);
     }
 
     public Touchpad getTouchpad(){
@@ -74,7 +80,7 @@ public class CirclePad {
         this.fire(pos.x,pos.y, pointer);
     }
 
-    public void setVisibile(boolean isVisible){
+    public void setVisible(boolean isVisible){
         this.tp.setVisible(isVisible);
     }
 }

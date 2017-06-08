@@ -24,6 +24,10 @@ public class PrefManager {
     private static boolean default_hideCpads = false;
     private static String hideCpads_str = "hide_cpads";
 
+    private static boolean lockCpads = false;
+    private static boolean default_lockCpads = false;
+    private static String lockCpads_str = "lock_cpads";
+
     public PrefManager(){
         pref = Gdx.app.getPreferences(PREF_NAME);
         init();
@@ -54,5 +58,17 @@ public class PrefManager {
 
     public static boolean getHideCpads(){
         return hideCpads;
+    }
+
+    public static void setHideCpads(boolean isHidden){
+        hideCpads = isHidden;
+    }
+
+    public static boolean getLockCpads(){
+        return lockCpads;
+    }
+
+    public static void setLockCpads(boolean isLocked){
+        lockCpads = isLocked;
     }
 }
