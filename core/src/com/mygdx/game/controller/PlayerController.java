@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.managers.PrefManager;
-import com.mygdx.game.objects.BaseGameObject;
 import com.mygdx.game.objects.player.Player;
 import com.mygdx.game.ui.CirclePad;
 import com.mygdx.game.utility.GameConstants;
@@ -88,10 +87,12 @@ public class PlayerController {
         //Hide Cpads
         if(PrefManager.getHideCpads() && !PrefManager.getLockCpads()) {
             if (!this.Lpad.isTouched()) {
-                this.Lpad.setVisible(false);
+                //this.Lpad.setVisible(false);
+                this.Lpad.setPosition(100000,100000);
             }
             if (!this.Rpad.isTouched()) {
-                this.Rpad.setVisible(false);
+                //this.Rpad.setVisible(false);
+                this.Rpad.setPosition(100000,100000);
             }
         }
     }

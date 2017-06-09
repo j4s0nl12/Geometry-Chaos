@@ -31,7 +31,8 @@ public class CirclePad {
         this.fakeInputEvent = new InputEvent();
         this.fakeInputEvent.setType(Type.touchDown);
         if(PrefManager.getHideCpads() && !PrefManager.getLockCpads()) {
-            this.setVisible(false);
+            //this.setVisible(false);
+            this.setPosition(100000, 100000);
         }
     }
 
