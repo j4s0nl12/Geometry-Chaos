@@ -85,7 +85,7 @@ public class PlayerController {
             this.controllee.applyFrict(this.controllee.getAccelIncr()*2, delta);
         }
         //Hide Cpads
-        if(PrefManager.getHideCpads() && !PrefManager.getLockCpads()) {
+        if(PrefManager.getBoolean(PrefManager.hideCpads_str) && !PrefManager.getBoolean(PrefManager.lockCpads_str)) {
             if (!this.Lpad.isTouched()) {
                 //this.Lpad.setVisible(false);
                 this.Lpad.setPosition(100000,100000);

@@ -1,3 +1,11 @@
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\ui\CirclePad$override.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\ui\FreeText$override.class
 CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\screens\OptionsScreen$override.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\screens\MainMenuScreen$override.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\main\GeometryChaos$override.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\managers\PrefManager$override.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\managers\ScreenManager$override.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\controller\PlayerController$override.class
 CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\screens\GameScreen$override.class
-CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\objects\player\Player$override.class
+CHANGED,C:\Users\Jason\Desktop\Geometry-Chaos\android\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\mygdx\game\ui\MyButton$override.class

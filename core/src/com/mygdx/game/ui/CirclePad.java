@@ -1,37 +1,27 @@
 package com.mygdx.game.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.mygdx.game.managers.AssetManager;
 import com.mygdx.game.managers.PrefManager;
 
 public class CirclePad {
 
-    private final String DIR = "Skins/neon/skin/";
-    private final String JSON = "neon-ui.json";
-    private final String ATLAS = "neon-ui.atlas";
-
     private Touchpad tp;
-    private Skin skin;
 
     private InputEvent fakeInputEvent;
 
     public CirclePad(float x, float y, float size){
-        this.skin = new Skin(Gdx.files.internal(DIR + JSON));
-        this.skin.addRegions(new TextureAtlas(DIR + ATLAS));
-        this.tp = new Touchpad(10f, this.skin);
+        this.tp = new Touchpad(10f, AssetManager.getNeonSkin());
         this.tp.setOrigin(x,y);
         this.tp.setSize(size,size);
         this.tp.setPosition(x - this.tp.getWidth()/2, y - this.tp.getHeight()/2);
         this.fakeInputEvent = new InputEvent();
         this.fakeInputEvent.setType(Type.touchDown);
-        if(PrefManager.getHideCpads() && !PrefManager.getLockCpads()) {
-            //this.setVisible(false);
+        if(PrefManager.getBoolean(PrefManager.hideCpads_str) && !PrefManager.getBoolean(PrefManager.lockCpads_str)) {
             this.setPosition(100000, 100000);
         }
     }

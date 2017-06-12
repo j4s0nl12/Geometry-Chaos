@@ -1,5 +1,6 @@
 package com.mygdx.game.managers;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.mygdx.game.utility.GameConstants;
@@ -9,27 +10,18 @@ public class PrefManager {
     private static Preferences pref;
     private final static String PREF_NAME = "mygame_pref";
 
-    private static float master_volume;
-    private static String master_volume_str = "master_volume";
-    private static float bg_volume;
-    private static String bg_volume_str = "bg_volume";
-    private static float sfx_volume;
-    private static String sfx_volume_str = "sfx_volume";
+    public static String master_volume_str = "master_volume";
+    public static String bg_volume_str = "bg_volume";
+    public static String sfx_volume_str = "sfx_volume";
 
-    private static boolean hideCpads;
-    private static String hideCpads_str = "hide_cpads";
+    public static String hideCpads_str = "hide_cpads";
 
-    private static boolean lockCpads;
-    private static String lockCpads_str = "lock_cpads";
+    public static String lockCpads_str = "lock_cpads";
 
-    private static float LpadX;
-    private static String LpadX_str = "Lpad_x";
-    private static float LpadY;
-    private static String LpadY_str = "Lpad_y";
-    private static float RpadX;
-    private static String RpadX_str = "Rpad_x";
-    private static float RpadY;
-    private static String RpadY_str = " Rpad_y";
+    public static String LpadX_str = "Lpad_x";
+    public static String LpadY_str = "Lpad_y";
+    public static String RpadX_str = "Rpad_x";
+    public static String RpadY_str = " Rpad_y";
 
     public PrefManager(){
         pref = Gdx.app.getPreferences(PREF_NAME);
@@ -41,83 +33,55 @@ public class PrefManager {
 
         //Master Volume
         if(!pref.contains(master_volume_str)){
-            master_volume = GameConstants.getDefaultMasterVolume();
-            pref.putFloat(master_volume_str, master_volume);
+            pref.putFloat(master_volume_str, GameConstants.getDefaultMasterVolume());
             needToFlush = true;
-        }else{
-            master_volume = pref.getFloat(master_volume_str);
         }
-
         //BG Volume
         if(!pref.contains(bg_volume_str)){
-            bg_volume = GameConstants.getDefaultBgVolume();
-            pref.putFloat(bg_volume_str, bg_volume);
+            pref.putFloat(bg_volume_str, GameConstants.getDefaultBgVolume());
             needToFlush = true;
-        }else{
-            bg_volume = pref.getFloat(bg_volume_str);
         }
 
         //SFX Volume
         if(!pref.contains(sfx_volume_str)){
-            sfx_volume = GameConstants.getDefaultSfxVolume();
-            pref.putFloat(sfx_volume_str, sfx_volume);
+            pref.putFloat(sfx_volume_str, GameConstants.getDefaultSfxVolume());
             needToFlush = true;
-        }else{
-            sfx_volume = pref.getFloat(sfx_volume_str);
         }
 
         //Hide Cpads
         if(!pref.contains(hideCpads_str)){
-            hideCpads = GameConstants.getDefaultHideCpads();
-            pref.putBoolean(hideCpads_str, hideCpads);
+            pref.putBoolean(hideCpads_str, GameConstants.getDefaultHideCpads());
             needToFlush = true;
-        }else{
-            hideCpads = pref.getBoolean(hideCpads_str);
         }
 
         //Lock Cpads
         if(!pref.contains(lockCpads_str)){
-            lockCpads = GameConstants.getDefaultLockCpads();
-            pref.putBoolean(lockCpads_str, lockCpads);
+            pref.putBoolean(lockCpads_str, GameConstants.getDefaultLockCpads());
             needToFlush = true;
-        }else{
-            lockCpads = pref.getBoolean(lockCpads_str);
         }
 
         //LpadX
         if(!pref.contains(LpadX_str)){
-            LpadX = GameConstants.getDefaultLpadX();
-            pref.putFloat(LpadX_str, LpadX);
+            pref.putFloat(LpadX_str, GameConstants.getDefaultLpadX());
             needToFlush = true;
-        }else{
-            LpadX = pref.getFloat(LpadX_str);
         }
 
         //LpadY
         if(!pref.contains(LpadY_str)){
-            LpadY = GameConstants.getDefaultLpadY();
-            pref.putFloat(LpadY_str, LpadY);
+            pref.putFloat(LpadY_str, GameConstants.getDefaultLpadY());
             needToFlush = true;
-        }else{
-            LpadY = pref.getFloat(LpadY_str);
         }
 
         //RpadX
         if(!pref.contains(RpadX_str)){
-            RpadX = GameConstants.getDefaultRpadX();
-            pref.putFloat(RpadX_str, RpadX);
+            pref.putFloat(RpadX_str, GameConstants.getDefaultRpadX());
             needToFlush = true;
-        }else{
-            RpadX = pref.getFloat(RpadX_str);
         }
 
         //RpadY
         if(!pref.contains(RpadY_str)){
-            RpadY = GameConstants.getDefaultRpadY();
-            pref.putFloat(RpadY_str, RpadY);
+            pref.putFloat(RpadY_str, GameConstants.getDefaultRpadY());
             needToFlush = true;
-        }else{
-            RpadY = pref.getFloat(RpadY_str);
         }
 
         if(needToFlush){
@@ -130,19 +94,21 @@ public class PrefManager {
         init();
     }
 
-    public static boolean getHideCpads(){
-        return hideCpads;
+    public static float getFloat(String key){
+        return pref.getFloat(key);
     }
 
-    public static void setHideCpads(boolean isHidden){
-        hideCpads = isHidden;
+    public static boolean getBoolean(String key){
+        return pref.getBoolean(key);
     }
 
-    public static boolean getLockCpads(){
-        return lockCpads;
+    public static void setFloat(String key, float val){
+        pref.putFloat(key, val);
+        pref.flush();
     }
 
-    public static void setLockCpads(boolean isLocked){
-        lockCpads = isLocked;
+    public static void setBoolean(String key, boolean val){
+        pref.putBoolean(key, val);
+        pref.flush();
     }
 }

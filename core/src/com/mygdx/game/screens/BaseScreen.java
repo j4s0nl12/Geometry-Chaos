@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -30,21 +31,28 @@ public class BaseScreen extends InputAdapter implements Screen{
     public InputMultiplexer iM;
     public Stage stage;
 
-    //private Text time;
-    private FreeText time;
+    private static FreeText time;
+    private static int hour;
+    private static int min;
 
     private ShapeRenderer sr;
 
     private boolean debug = false;
 
+    private Color bgColor;
+
     public BaseScreen(final GeometryChaos gam){
         this.game = gam;
         this.state = STATE_RUN;
+        this.bgColor = new Color(.05f,.05f,.05f,1);
         this.iM = new InputMultiplexer();
         this.stage = new Stage(game.viewport);
-        this.time = new FreeText(GameConstants.getVirtualWidth()*99/100, GameConstants.getVirtualHeight()*49/50f, 40, "");
+        this.time = new FreeText(GameConstants.getVirtualWidth()*24/25, GameConstants.getVirtualHeight()*49/50f,
+                                 40, "");
 
         this.sr = new ShapeRenderer();
+        this.hour = 0;
+        this.min = 0;
     }
 
     @Override
@@ -60,7 +68,7 @@ public class BaseScreen extends InputAdapter implements Screen{
             Gdx.app.exit();
         }
 
-        Gdx.gl.glClearColor(.05f, .05f, .05f,1);
+        Gdx.gl.glClearColor(this.bgColor.r,this.bgColor.g,this.bgColor.b,this.bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(this.compareState(STATE_RUN)) {
             this.stage.act(delta);
@@ -82,8 +90,20 @@ public class BaseScreen extends InputAdapter implements Screen{
         cal.setTimeInMillis(t);
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mma");
         String curTime = sdf.format(cal.getTime());
-        this.time.setText(curTime);
+        if(this.hour != cal.get(Calendar.HOUR) || this.min != cal.get(Calendar.MINUTE)){
+            this.time.setText(curTime);
+            this.hour = cal.get(Calendar.HOUR);
+            this.min = cal.get(Calendar.MINUTE);
+        }
         this.time.draw(batch);
+    }
+
+    public void setBgColor(Color c){
+        this.bgColor = c;
+    }
+
+    public void setBgColor(float r, float g, float b, float a){
+        this.setBgColor(new Color(r,g,b,a));
     }
 
     @Override
@@ -108,7 +128,7 @@ public class BaseScreen extends InputAdapter implements Screen{
 
     @Override
     public void dispose() {
-
+        this.time.dispose();
     }
 
     public void setState(int state){
