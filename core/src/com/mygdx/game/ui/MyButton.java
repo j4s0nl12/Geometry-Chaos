@@ -58,4 +58,17 @@ public class MyButton {
     public boolean isDisabled(){
         return this.button.isDisabled();
     }
+
+    public void set(float x, float y){
+        this.button.setOrigin(x,y);
+        this.button.setPosition(x - this.button.getWidth()/2, y - this.button.getHeight()/2);
+    }
+
+    public void setX(float x){
+        this.set(x, this.button.getOriginY());
+    }
+
+    public void setY(float y){
+        this.set(this.button.getOriginX(), y);
+    }
 }

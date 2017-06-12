@@ -51,4 +51,8 @@ public class GeometryChaos extends Game {
 	public void goBack(){
 		sm.goBack();
 	}
+
+	public boolean gameExists(){
+		return sm.gameExists();
+	}
 }
