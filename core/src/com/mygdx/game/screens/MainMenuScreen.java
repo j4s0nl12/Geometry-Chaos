@@ -1,6 +1,5 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.managers.ScreenManager;
 import com.mygdx.game.ui.MyButton;

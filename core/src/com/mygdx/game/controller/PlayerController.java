@@ -75,9 +75,10 @@ public class PlayerController {
         }
         //Rotation and Shooting (Mouse onClick)
         else if(!Gdx.app.getType().equals(Application.ApplicationType.Android)){
-            if(Gdx.input.isTouched() && !this.Lpad.isTouched()) {
+            if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !this.Lpad.isTouched()) {
                 Vector2 dir = Utility.getUnprojectAt(Gdx.input.getX(), Gdx.input.getY(), 0).sub(this.controllee.getCenterPos());
                 this.controllee.setRotation(dir);
+                this.controllee.shoot();
             }
         }
         //Friction if no movement input

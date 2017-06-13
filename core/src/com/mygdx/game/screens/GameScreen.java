@@ -6,7 +6,6 @@ import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.managers.GameObjectManager;
 import com.mygdx.game.managers.PrefManager;
 import com.mygdx.game.managers.ScreenManager;
-import com.mygdx.game.objects.enemies.TestEnemy;
 import com.mygdx.game.ui.MyButton;
 import com.mygdx.game.ui.FreeText;
 import com.mygdx.game.utility.GameConstants;
@@ -26,7 +25,6 @@ public class GameScreen extends BaseScreen{
         super(gam);
         gom = new GameObjectManager();
         gom.addPlayer(GameConstants.getVirtualWidth()/2,GameConstants.getVirtualHeight()/2);
-        gom.add(new TestEnemy(new Vector2(800,800),new Vector2()));
         for(Actor a : gom.getPlayerController().getActors()){
             this.stage.addActor(a);
         }

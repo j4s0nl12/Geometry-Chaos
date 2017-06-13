@@ -2,7 +2,9 @@ package com.mygdx.game.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -16,11 +18,17 @@ public class AssetManager {
     private final String NEON_JSON = "neon-ui.json";
     private final String NEON_ATLAS = "neon-ui.atlas";
 
+    private final String PLAYER_SPRITE = "Images/player.png";
+    private final String BULLET_SPRITE = "Images/bulletTest.png";
+
     private FileHandle fontFile;
     private static FreeTypeFontGenerator gen;
     private static FreeTypeFontParameter par;
 
     private static Skin neonSkin;
+
+    private static Texture playerTexture;
+    private static Texture bulletTexture;
 
     public AssetManager(){
         //Fonts
@@ -31,6 +39,10 @@ public class AssetManager {
         //Skins
         neonSkin = new Skin(Gdx.files.internal(NEON_SKIN + NEON_JSON));
         neonSkin.addRegions(new TextureAtlas(NEON_SKIN + NEON_ATLAS));
+
+        //Texture
+        playerTexture = new Texture(Gdx.files.internal(PLAYER_SPRITE));
+        bulletTexture = new Texture(Gdx.files.internal(BULLET_SPRITE));
     }
 
     public static BitmapFont generateFont(int size){
@@ -40,6 +52,14 @@ public class AssetManager {
 
     public static Skin getNeonSkin(){
         return neonSkin;
+    }
+
+    public static Sprite getPlayerSprite(){
+        return new Sprite(playerTexture);
+    }
+
+    public static Sprite getBulletSprite(){
+        return new Sprite(bulletTexture);
     }
 
     public void dispose(){

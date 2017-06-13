@@ -101,9 +101,9 @@ public class BaseGameObject implements Comparable<BaseGameObject>{
         this.setRotation(dir.x,dir.y);
     }
 
-    public void setSprite(String imgFile){
+    public void setSprite(Sprite s){
         if(this.sprite == null) {
-            this.sprite = new Sprite(new Texture(Gdx.files.internal(imgFile)));
+            this.sprite = s;
             this.pos.sub(this.sprite.getWidth()/2, this.sprite.getHeight()/2);
             this.setSpritePos(this.pos);
         }else{
@@ -179,6 +179,19 @@ public class BaseGameObject implements Comparable<BaseGameObject>{
 
     public boolean getToDestory(){
         return this.toDestroy;
+    }
+
+    public Vector2 getDir(float angle){
+        float rad = (angle + 90) * MathUtils.degreesToRadians;
+        return new Vector2(MathUtils.cos(rad),MathUtils.sin(rad));
+    }
+
+    public Vector2 getThisDir(){
+        return getDir(this.getAngle());
+    }
+
+    public float getAngle(){
+        return this.sprite.getRotation();
     }
 
     public void setPos(Vector2 pos){

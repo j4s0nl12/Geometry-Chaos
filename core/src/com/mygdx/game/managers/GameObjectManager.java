@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 public class GameObjectManager {
 
-    private Array<BaseGameObject> olist;
+    private static Array<BaseGameObject> olist;
     private QuadTree quad;
     private PlayerController player;
 
@@ -34,11 +34,11 @@ public class GameObjectManager {
 
         player.update(delta);
 
-        for(BaseGameObject o : this.olist){
+        for(BaseGameObject o : olist){
             o.update(delta);
         }
 
-        quad.update(this.olist);
+        quad.update(olist);
     }
 
     public void draw(SpriteBatch batch){
@@ -48,14 +48,14 @@ public class GameObjectManager {
         }
     }
 
-    public void add(BaseGameObject o){
+    public static void add(BaseGameObject o){
         olist.add(o);
     }
 
     public void addPlayer(float x, float y){
         if(this.player == null) {
             add(new Player(new Vector2(x, y), new Vector2()));
-            this.player = new PlayerController((Player) this.olist.get(this.olist.size - 1));
+            this.player = new PlayerController((Player) olist.get(olist.size - 1));
         }else{
             Utility.print("GOM","Error: Player already initialized!");
         }
