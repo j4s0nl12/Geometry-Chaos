@@ -18,8 +18,9 @@ public class AssetManager {
     private final String NEON_JSON = "neon-ui.json";
     private final String NEON_ATLAS = "neon-ui.atlas";
 
-    private final String PLAYER_SPRITE = "Images/player.png";
-    private final String BULLET_SPRITE = "Images/bulletTest.png";
+    private final String PLAYER_IMAGE = "Images/player.png";
+    private final String BULLET_IMAGE = "Images/bulletTest.png";
+    private final String DUMMY_IMAGE = "Images/dummy.png";
 
     private FileHandle fontFile;
     private static FreeTypeFontGenerator gen;
@@ -29,6 +30,7 @@ public class AssetManager {
 
     private static Texture playerTexture;
     private static Texture bulletTexture;
+    private static Texture dummyTexture;
 
     public AssetManager(){
         //Fonts
@@ -41,8 +43,9 @@ public class AssetManager {
         neonSkin.addRegions(new TextureAtlas(NEON_SKIN + NEON_ATLAS));
 
         //Texture
-        playerTexture = new Texture(Gdx.files.internal(PLAYER_SPRITE));
-        bulletTexture = new Texture(Gdx.files.internal(BULLET_SPRITE));
+        playerTexture = new Texture(Gdx.files.internal(PLAYER_IMAGE));
+        bulletTexture = new Texture(Gdx.files.internal(BULLET_IMAGE));
+        dummyTexture = new Texture(Gdx.files.internal(DUMMY_IMAGE));
     }
 
     public static BitmapFont generateFont(int size){
@@ -60,6 +63,10 @@ public class AssetManager {
 
     public static Sprite getBulletSprite(){
         return new Sprite(bulletTexture);
+    }
+
+    public static Sprite getDummySprite(){
+        return new Sprite(dummyTexture);
     }
 
     public void dispose(){

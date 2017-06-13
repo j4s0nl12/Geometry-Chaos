@@ -1,12 +1,16 @@
 package com.mygdx.game.objects.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.objects.BaseGameObject;
+import com.mygdx.game.objects.enemies.BaseEnemy;
 import com.mygdx.game.utility.GameConstants;
 
 public class BaseProjectile extends BaseGameObject{
 
     private BaseGameObject owner;
+
+    private Array<BaseGameObject> hitList;
 
     private int splitDepth;
 
@@ -29,6 +33,7 @@ public class BaseProjectile extends BaseGameObject{
 
     private void init(BaseGameObject owner, int splitDepth, int bounces, boolean pierces, boolean splits, boolean cluster){
         this.owner = owner;
+        this.hitList = new Array();
 
         this.splitDepth = splitDepth;
         this.bounces = bounces;
@@ -49,13 +54,53 @@ public class BaseProjectile extends BaseGameObject{
 
     @Override
     public void collision(BaseGameObject o){
-        if(o.equals(this.owner)){
+        if(o.equals(this.owner) || o.getClass().getSuperclass() == BaseProjectile.class){
 
-        }else if(o.getClass() == this.getClass()){
-
-        }else{
-            super.collision(o);
+        }else if(o.getClass().getSuperclass() == BaseEnemy.class && !this.hitList.contains(o, true)){
+            this.hitList.add(o);
+            //super.collision(o);
+            if(this.cluster && this.splitDepth == 0){
+                this.cluster();
+            }
+            if(this.splits && this.splitDepth < GameConstants.getMaxSplits()){
+                this.split(o);
+            }
+            if(!this.pierces){
+                this.destroy();
+            }
         }
+    }
+
+    public void addToHitList(BaseGameObject o){
+        this.hitList.add(o);
+    }
+
+    public void split(BaseGameObject o){
+
+    }
+
+    public void cluster(){
+
+    }
+
+    public int getSplitDepth(){
+        return this.splitDepth;
+    }
+
+    public int getBounces(){
+        return this.bounces;
+    }
+
+    public boolean getPierces(){
+        return this.pierces;
+    }
+
+    public boolean getSplits(){
+        return this.splits;
+    }
+
+    public boolean getCluster(){
+        return this.cluster;
     }
 
     public void bounceBorder(){

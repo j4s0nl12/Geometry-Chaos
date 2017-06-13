@@ -84,7 +84,7 @@ public class Player extends BaseGameObject{
 
     @Override
     public void collision(BaseGameObject o){
-        if(o.getClass() == Bullet.class){
+        if(o.getClass().getSuperclass() == BaseProjectile.class){
             BaseProjectile tmp = (BaseProjectile) o;
             if(tmp.getOwner() != this){
                 super.collision(o);

@@ -1,5 +1,8 @@
 package com.mygdx.game.utility;
 
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.objects.BaseGameObject;
+
 public class GameConstants {
 
     private static int VIRTUAL_WIDTH = 1920;
