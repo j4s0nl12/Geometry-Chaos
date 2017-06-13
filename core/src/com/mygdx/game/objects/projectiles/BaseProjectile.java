@@ -8,7 +8,6 @@ public class BaseProjectile extends BaseGameObject{
 
     private BaseGameObject owner;
 
-    private static int MAX_SPLITS = 3;
     private int splitDepth;
 
     private int bounces;
@@ -19,7 +18,7 @@ public class BaseProjectile extends BaseGameObject{
 
     public BaseProjectile(Vector2 pos, Vector2 vel, BaseGameObject owner) {
         super(pos, vel);
-        this.init(owner, 0, 3, false, false, false);
+        this.init(owner, 0, 0, false, false, false);
     }
 
     public BaseProjectile(Vector2 pos, Vector2 vel, BaseGameObject owner, int splitDepth,
@@ -50,25 +49,32 @@ public class BaseProjectile extends BaseGameObject{
 
     @Override
     public void collision(BaseGameObject o){
-        if(!o.equals(this.owner)){
+        if(o.equals(this.owner)){
+
+        }else if(o.getClass() == this.getClass()){
+
+        }else{
             super.collision(o);
         }
     }
 
     public void bounceBorder(){
-        if(this.bounces > 0){
-            if(this.getPosX() <= GameConstants.getGameWorldX() ||
-               this.getPosX() >= GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth() - this.getWidth()){
+        if(this.getPosX() <= GameConstants.getGameWorldX() ||
+           this.getPosX() >= GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth() - this.getWidth()){
+            if(this.bounces > 0){
                 this.setVelX(-this.getVelX());
                 this.bounces--;
+            }else{
+                this.destroy();
             }
-            if(this.getPosY() <= GameConstants.getGameWorldY() ||
-               this.getPosY() >= GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight() - this.getHeight()){
+        } else if(this.getPosY() <= GameConstants.getGameWorldY() ||
+                  this.getPosY() >= GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight() - this.getHeight()) {
+            if(this.bounces > 0) {
                 this.setVelY(-this.getVelY());
                 this.bounces--;
+            }else{
+                this.destroy();
             }
-        }else{
-            this.destroy();
         }
     }
 }

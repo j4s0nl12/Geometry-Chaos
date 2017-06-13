@@ -20,6 +20,11 @@ public class GameConstants {
     private static float DEFAULT_RPADX = VIRTUAL_WIDTH * .89f;
     private static float DEFAULT_RPADY = VIRTUAL_HEIGHT * .2f;
 
+    private static int MAX_SPLITS = 3;
+    private static int MAX_BOUNCES = 3;
+    private static int MAX_SPREAD = 4;
+    private static int MAX_SPD = 10;
+
     public static int getVirtualWidth(){
         return VIRTUAL_WIDTH;
     }
@@ -70,5 +75,18 @@ public class GameConstants {
     }
     public static float getDefaultRpadY(){
         return DEFAULT_RPADY;
+    }
+
+    public static int getMaxSplits(){
+        return MAX_SPLITS;
+    }
+    public static int getMaxBounces(){
+        return MAX_BOUNCES;
+    }
+    public static int getMaxSpread(){
+        return MAX_SPREAD;
+    }
+    public static int getMaxSpd(){
+        return MAX_SPD;
     }
 }

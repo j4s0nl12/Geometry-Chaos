@@ -120,6 +120,10 @@ public class BaseGameObject implements Comparable<BaseGameObject>{
         this.setSpritePos(pos.x, pos.y);
     }
 
+    public void setSpriteScale(float scale){
+        this.sprite.setScale(scale);
+    }
+
     public void destroy(){
         this.toDestroy = true;
     }
