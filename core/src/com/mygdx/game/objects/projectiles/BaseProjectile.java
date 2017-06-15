@@ -1,5 +1,6 @@
 package com.mygdx.game.objects.projectiles;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.objects.BaseGameObject;
@@ -58,7 +59,9 @@ public class BaseProjectile extends BaseGameObject{
 
         }else if(o.getClass().getSuperclass() == BaseEnemy.class && !this.hitList.contains(o, true)){
             this.hitList.add(o);
-            //super.collision(o);
+            Vector2 dir = this.getCenterPos().cpy().sub(o.getCenterPos()).nor();
+            float dst = this.getBoundingCircleRad();
+            this.collideParticleEffects(this.getCenterPos().cpy().sub(dir.scl(dst)));
             if(this.cluster && this.splitDepth == 0){
                 this.cluster();
             }
@@ -104,16 +107,33 @@ public class BaseProjectile extends BaseGameObject{
     }
 
     public void bounceBorder(){
-        if(this.getPosX() <= GameConstants.getGameWorldX() ||
-           this.getPosX() >= GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth() - this.getWidth()){
+        if(this.getPosX() <= GameConstants.getGameWorldX()){
+            this.collideParticleEffects(new Vector2(GameConstants.getGameWorldX(),this.getCenterPos().y));
             if(this.bounces > 0){
                 this.setVelX(-this.getVelX());
                 this.bounces--;
             }else{
                 this.destroy();
             }
-        } else if(this.getPosY() <= GameConstants.getGameWorldY() ||
-                  this.getPosY() >= GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight() - this.getHeight()) {
+        }else if(this.getPosX() >= GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth() - this.getWidth()){
+            this.collideParticleEffects(new Vector2(GameConstants.getGameWorldX() + GameConstants.getGameWorldWidth(), this.getCenterPos().y));
+            if(this.bounces > 0){
+                this.setVelX(-this.getVelX());
+                this.bounces--;
+            }else{
+                this.destroy();
+            }
+        }
+        if(this.getPosY() <= GameConstants.getGameWorldY()){
+            this.collideParticleEffects(new Vector2(this.getCenterPos().x, GameConstants.getGameWorldY()));
+            if(this.bounces > 0) {
+                this.setVelY(-this.getVelY());
+                this.bounces--;
+            }else{
+                this.destroy();
+            }
+        }else if(this.getPosY() >= GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight() - this.getHeight()) {
+            this.collideParticleEffects(new Vector2(this.getCenterPos().x,GameConstants.getGameWorldY() + GameConstants.getGameWorldHeight()));
             if(this.bounces > 0) {
                 this.setVelY(-this.getVelY());
                 this.bounces--;
@@ -121,5 +141,9 @@ public class BaseProjectile extends BaseGameObject{
                 this.destroy();
             }
         }
+    }
+
+    public void collideParticleEffects(Vector2 collidePos){
+
     }
 }

@@ -68,6 +68,8 @@ public class BaseScreen extends InputAdapter implements Screen{
             Gdx.app.exit();
         }
 
+        Gdx.graphics.setTitle("[FPS:" + Gdx.graphics.getFramesPerSecond() + "] Geometry Chaos");
+
         Gdx.gl.glClearColor(this.bgColor.r,this.bgColor.g,this.bgColor.b,this.bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(this.compareState(STATE_RUN)) {

@@ -1,9 +1,11 @@
 package com.mygdx.game.objects.projectiles;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.managers.AssetManager;
 import com.mygdx.game.managers.GameObjectManager;
 import com.mygdx.game.objects.BaseGameObject;
+import com.mygdx.game.objects.particles.RainbowParticle;
 
 public class Bullet extends BaseProjectile {
 
@@ -21,9 +23,10 @@ public class Bullet extends BaseProjectile {
     }
 
     public void init(){
-        this.setSprite(AssetManager.getBulletSprite());
-        this.setSpriteScale(.4f);
+        this.setSprite(AssetManager.getBulletSprite(), .4f);
+        this.setBoundingCircleScl(.5f);
         this.setVel(this.getVel().scl(this.spd));
+        //this.thisDebug = true;
     }
 
     @Override
@@ -39,4 +42,14 @@ public class Bullet extends BaseProjectile {
         GameObjectManager.add(tmp1);
         GameObjectManager.add(tmp2);
     }
+
+    /*
+    @Override
+    public void collideParticleEffects(Vector2 collidePos){
+        int numParticles = MathUtils.random(4,6);
+        for(int i = 0; i < numParticles; i++){
+            Vector2 dir = new Vector2(MathUtils.random(-1f,1f),MathUtils.random(-1f,1f)).nor();
+            GameObjectManager.add(new RainbowParticle(collidePos.cpy(), dir.cpy(), 2000L));
+        }
+    }*/
 }

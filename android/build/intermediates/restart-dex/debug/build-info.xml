@@ -4,21 +4,21 @@
     api-level="25"
     density="420dpi"
     format="7"
-    timestamp="362977273308888"
+    timestamp="486963229402666"
     token="-1633463421539644109" >
 
     <task
         name="javac"
-        duration="861" />
+        duration="375" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="449" />
+        duration="407" />
     <task
         name="verifier"
-        duration="414" />
+        duration="136" />
 
     <artifact
         location="C:\Users\Jason\Desktop\Geometry-Chaos\android\build\outputs\apk\android-debug.apk"

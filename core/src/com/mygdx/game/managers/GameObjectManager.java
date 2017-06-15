@@ -38,7 +38,8 @@ public class GameObjectManager {
             o.update(delta);
         }
 
-        quad.update(olist);
+        //quad.update(olist);
+        quad.update(collideableList());
     }
 
     public void draw(SpriteBatch batch){
@@ -63,5 +64,15 @@ public class GameObjectManager {
 
     public PlayerController getPlayerController(){
         return this.player;
+    }
+
+    private Array<BaseGameObject> collideableList(){
+        Array<BaseGameObject> tmp = new Array();
+        for(BaseGameObject o : this.olist){
+            if(o.canCollide()){
+                tmp.add(o);
+            }
+        }
+        return tmp;
     }
 }

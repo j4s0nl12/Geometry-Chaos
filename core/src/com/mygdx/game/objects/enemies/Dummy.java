@@ -10,6 +10,8 @@ public class Dummy extends BaseEnemy{
     public Dummy(Vector2 pos, Vector2 vel) {
         super(pos, vel);
         this.setSprite(AssetManager.getDummySprite());
+        this.setBoundingCircleScl(.66f);
+        //this.thisDebug = true;
     }
 
     @Override

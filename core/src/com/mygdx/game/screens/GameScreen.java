@@ -7,6 +7,7 @@ import com.mygdx.game.managers.GameObjectManager;
 import com.mygdx.game.managers.PrefManager;
 import com.mygdx.game.managers.ScreenManager;
 import com.mygdx.game.objects.enemies.Dummy;
+import com.mygdx.game.objects.enemies.SuperDummy;
 import com.mygdx.game.ui.MyButton;
 import com.mygdx.game.ui.FreeText;
 import com.mygdx.game.utility.GameConstants;
@@ -26,9 +27,9 @@ public class GameScreen extends BaseScreen{
         super(gam);
         gom = new GameObjectManager();
         gom.addPlayer(GameConstants.getVirtualWidth()/2,GameConstants.getVirtualHeight()/2);
-        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
-        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
-        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()*2/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
+        gom.add(new SuperDummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
+        //gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
+        //gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()*2/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
 
         for(Actor a : gom.getPlayerController().getActors()){
             this.stage.addActor(a);

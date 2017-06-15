@@ -19,8 +19,9 @@ public class AssetManager {
     private final String NEON_ATLAS = "neon-ui.atlas";
 
     private final String PLAYER_IMAGE = "Images/player.png";
-    private final String BULLET_IMAGE = "Images/bulletTest.png";
+    private final String BULLET_IMAGE = "Images/bullet.png";
     private final String DUMMY_IMAGE = "Images/dummy.png";
+    private final String SUPERDUMMY_IMAGE = "Images/superdummy.png";
 
     private FileHandle fontFile;
     private static FreeTypeFontGenerator gen;
@@ -31,6 +32,7 @@ public class AssetManager {
     private static Texture playerTexture;
     private static Texture bulletTexture;
     private static Texture dummyTexture;
+    private static Texture superdummyTexture;
 
     public AssetManager(){
         //Fonts
@@ -46,6 +48,7 @@ public class AssetManager {
         playerTexture = new Texture(Gdx.files.internal(PLAYER_IMAGE));
         bulletTexture = new Texture(Gdx.files.internal(BULLET_IMAGE));
         dummyTexture = new Texture(Gdx.files.internal(DUMMY_IMAGE));
+        superdummyTexture = new Texture(Gdx.files.internal(SUPERDUMMY_IMAGE));
     }
 
     public static BitmapFont generateFont(int size){
@@ -67,6 +70,10 @@ public class AssetManager {
 
     public static Sprite getDummySprite(){
         return new Sprite(dummyTexture);
+    }
+
+    public static Sprite getSuperDummySprite(){
+        return new Sprite(superdummyTexture);
     }
 
     public void dispose(){

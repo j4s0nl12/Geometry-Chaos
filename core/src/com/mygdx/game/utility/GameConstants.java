@@ -46,6 +46,12 @@ public class GameConstants {
     public static int getGameWorldY(){
         return (VIRTUAL_HEIGHT - GAME_WORLD_HEIGHT)/2;
     }
+    public static int getGameWorldX2(){
+        return getGameWorldX() + GAME_WORLD_WIDTH;
+    }
+    public static int getGameWorldY2(){
+        return getGameWorldY() + GAME_WORLD_HEIGHT;
+    }
 
     public static float getVolumeOffset(){
         return VOLUME_OFFSET;

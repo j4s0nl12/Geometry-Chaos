@@ -1,14 +1,15 @@
 package com.mygdx.game.objects.player;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.managers.AssetManager;
 import com.mygdx.game.managers.GameObjectManager;
 import com.mygdx.game.objects.BaseGameObject;
 import com.mygdx.game.objects.projectiles.BaseProjectile;
 import com.mygdx.game.objects.projectiles.Bullet;
-import com.mygdx.game.utility.GameConstants;
 
 public class Player extends BaseGameObject{
 
@@ -28,20 +29,23 @@ public class Player extends BaseGameObject{
     public Player(Vector2 pos, Vector2 vel) {
         super(pos, vel);
         this.setSprite(AssetManager.getPlayerSprite());
+        this.setBoundingCircleScl(.5f);
 
         this.setMaxAccel(8f);
         this.setAccelIncr(this.getMaxAccel()*4f);
 
         this.missles = 0;
         this.spread = 0;
-        this.spd = 1;//GameConstants.getMaxSpd();
-        this.bounces = 0;//GameConstants.getMaxBounces();
+        this.spd = 5;//GameConstants.getMaxSpd();
+        this.bounces = 1;//GameConstants.getMaxBounces();
         this.pierces = false;
         this.splits = false;
         this.cluster = false;
 
         this.shotDelay = 1000L;
         this.lastShot = System.currentTimeMillis() - this.shotDelay;
+
+        //this.thisDebug = true;
     }
 
     @Override

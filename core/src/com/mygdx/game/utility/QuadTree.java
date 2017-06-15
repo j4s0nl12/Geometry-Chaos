@@ -33,9 +33,12 @@ public class QuadTree {
             this.retrieve(returnObjects, list.get(i));
 
             for(int x = 0; x < returnObjects.size; x++){
-                if(list.get(i).checkCollision(returnObjects.get(x)) &&
-                   !list.get(i).equals(returnObjects.get(x)))
-                    list.get(i).collision(returnObjects.get(x));
+                if(!list.get(i).equals(returnObjects.get(x))) {
+                    if (list.get(i).checkInSight(returnObjects.get(x)))
+                        list.get(i).inSightAction(returnObjects.get(x));
+                    if (list.get(i).checkCollision(returnObjects.get(x)))
+                        list.get(i).collision(returnObjects.get(x));
+                }
             }
         }
     }
