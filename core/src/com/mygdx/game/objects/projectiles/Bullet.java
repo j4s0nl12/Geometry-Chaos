@@ -26,6 +26,7 @@ public class Bullet extends BaseProjectile {
         this.setSprite(AssetManager.getBulletSprite(), .4f);
         this.setBoundingCircleScl(.5f);
         this.setVel(this.getVel().scl(this.spd));
+        this.setDmgMultiplier(1f);
         //this.thisDebug = true;
     }
 
@@ -43,7 +44,6 @@ public class Bullet extends BaseProjectile {
         GameObjectManager.add(tmp2);
     }
 
-    /*
     @Override
     public void collideParticleEffects(Vector2 collidePos){
         int numParticles = MathUtils.random(4,6);
@@ -51,5 +51,5 @@ public class Bullet extends BaseProjectile {
             Vector2 dir = new Vector2(MathUtils.random(-1f,1f),MathUtils.random(-1f,1f)).nor();
             GameObjectManager.add(new RainbowParticle(collidePos.cpy(), dir.cpy(), 2000L));
         }
-    }*/
+    }
 }

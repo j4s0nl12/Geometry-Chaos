@@ -15,7 +15,7 @@ public class SuperDummy extends BaseEnemy{
         this.setWanderDelay(3000L);
         this.setMaxAccel(5f);
         this.setAccelIncr(this.getMaxAccel()*4f);
-        this.thisDebug = true;
+        //this.thisDebug = true;
     }
 
     @Override

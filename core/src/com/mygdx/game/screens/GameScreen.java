@@ -27,9 +27,10 @@ public class GameScreen extends BaseScreen{
         super(gam);
         gom = new GameObjectManager();
         gom.addPlayer(GameConstants.getVirtualWidth()/2,GameConstants.getVirtualHeight()/2);
-        gom.add(new SuperDummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
-        //gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
-        //gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()*2/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
+        //gom.add(new SuperDummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
+        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
+        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()*2/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
+        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
 
         for(Actor a : gom.getPlayerController().getActors()){
             this.stage.addActor(a);

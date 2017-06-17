@@ -55,7 +55,8 @@ public class BaseGameObject implements Comparable<BaseGameObject>{
     //FUNCTIONS=====================================================================================
     public void update(float delta){
         this.pos.add(this.vel);
-        this.setSpritePos(this.pos);
+        if(this.sprite != null)
+            this.setSpritePos(this.pos);
         if(this.sightCircle != null){
             Vector2 center = this.getCenterPos();
             this.sightCircle.setPosition(center.x, center.y);
@@ -91,7 +92,7 @@ public class BaseGameObject implements Comparable<BaseGameObject>{
     }
 
     public void inSightAction(BaseGameObject o){
-        if (Utility.debug)
+        if (Utility.debug && this.thisDebug)
             Utility.print(this.TAG + "(Debug)", "[" + o.TAG + "] in sight!");
     }
 

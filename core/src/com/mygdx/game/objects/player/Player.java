@@ -26,6 +26,8 @@ public class Player extends BaseGameObject{
     private boolean splits;
     private boolean cluster;
 
+    private int dmg = 10;
+
     public Player(Vector2 pos, Vector2 vel) {
         super(pos, vel);
         this.setSprite(AssetManager.getPlayerSprite());
@@ -35,11 +37,11 @@ public class Player extends BaseGameObject{
         this.setAccelIncr(this.getMaxAccel()*4f);
 
         this.missles = 0;
-        this.spread = 0;
-        this.spd = 5;//GameConstants.getMaxSpd();
-        this.bounces = 1;//GameConstants.getMaxBounces();
+        this.spread = 1;
+        this.spd = 3;//GameConstants.getMaxSpd();
+        this.bounces = 2;//GameConstants.getMaxBounces();
         this.pierces = false;
-        this.splits = false;
+        this.splits = true;
         this.cluster = false;
 
         this.shotDelay = 1000L;
@@ -76,6 +78,10 @@ public class Player extends BaseGameObject{
         for(int i = -half; i <= half; i++){
             GameObjectManager.add(augmentedBullet(pos.cpy(), dir.cpy().rotate(a*i).nor()));
         }
+    }
+
+    public int getDamage(){
+        return this.dmg;
     }
 
     public Bullet simpleBullet(Vector2 pos, Vector2 dir){

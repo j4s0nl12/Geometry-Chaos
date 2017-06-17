@@ -33,6 +33,12 @@ public class FreeText {
         this.font.draw(batch, this.text, this.x - this.layout.width/2, this.y + this.layout.height/2, this.layout.width, Align.center, false);
     }
 
+    public void draw(SpriteBatch batch, float alpha){
+        Color c = this.font.getColor();
+        this.font.setColor(c.r, c.g, c.b, alpha);
+        this.draw(batch);
+    }
+
     public void setText(String text){
         this.text = text;
         this.layout.setText(this.font, this.text);
