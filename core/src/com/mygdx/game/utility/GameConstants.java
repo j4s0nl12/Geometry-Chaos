@@ -1,5 +1,6 @@
 package com.mygdx.game.utility;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.objects.BaseGameObject;
 
@@ -14,6 +15,8 @@ public class GameConstants {
     private static float DEFAULT_MASTER_VOLUME = 1f;
     private static float DEFAULT_BG_VOLUME = 1f;
     private static float DEFAULT_SFX_VOLUME = 1f;
+
+    private static Color DEFAULT_THEME_COLOR = new Color(0, 204f/255, 204f/255, 1);
 
     private static boolean DEFAULT_HIDECPADS = false;
     private static boolean DEFAULT_LOCKCPADS = true;
@@ -64,6 +67,10 @@ public class GameConstants {
     }
     public static float getDefaultSfxVolume(){
         return DEFAULT_SFX_VOLUME;
+    }
+
+    public static Color getDefaultThemeColor(){
+        return DEFAULT_THEME_COLOR;
     }
 
     public static boolean getDefaultHideCpads(){

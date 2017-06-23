@@ -7,9 +7,8 @@ import com.mygdx.game.managers.GameObjectManager;
 import com.mygdx.game.managers.PrefManager;
 import com.mygdx.game.managers.ScreenManager;
 import com.mygdx.game.objects.enemies.Dummy;
-import com.mygdx.game.objects.enemies.SuperDummy;
-import com.mygdx.game.ui.MyButton;
-import com.mygdx.game.ui.FreeText;
+import com.mygdx.game.ui.MyLabel;
+import com.mygdx.game.ui.MyTextButton;
 import com.mygdx.game.utility.GameConstants;
 import com.mygdx.game.utility.Utility;
 
@@ -17,16 +16,18 @@ public class GameScreen extends BaseScreen{
 
     private static GameObjectManager gom;
 
-    private FreeText pause_title;
-    private MyButton pause;
-    private MyButton unpause;
-    private MyButton mainmenu;
-    private MyButton options;
+    private MyLabel pause_title;
+    private MyTextButton pause;
+    private MyTextButton unpause;
+    private MyTextButton mainmenu;
+    private MyTextButton options;
 
     public GameScreen(GeometryChaos gam) {
         super(gam);
         gom = new GameObjectManager();
         gom.addPlayer(GameConstants.getVirtualWidth()/2,GameConstants.getVirtualHeight()/2);
+
+        //Enemies
         //gom.add(new SuperDummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
         gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
         gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()*2/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
@@ -38,46 +39,55 @@ public class GameScreen extends BaseScreen{
 
         int button_width = 275;
         int button_height = 175;
+        int textButtonSize = 48;
 
-        pause_title = new FreeText(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*8/10,
-                                   160, "Paused");
-        pause = new MyButton(GameConstants.getVirtualWidth()*24/25, GameConstants.getVirtualHeight()*93/100,
-                           70, 75, 40, "||");
-        unpause = new MyButton(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*6.25f/10,
-                             button_width, button_height, "Continue");
-        options = new MyButton(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*4.5f/10,
-                             button_width, button_height, "Options");
-        mainmenu = new MyButton(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*2.75f/10,
-                              button_width, button_height, "MainMenu");
+        float width = GameConstants.getVirtualWidth();
+        float middleX = width/2;
+        float height = GameConstants.getVirtualHeight();
 
-        this.stage.addActor(pause.getButton());
-        this.stage.addActor(unpause.getButton());
-        this.stage.addActor(options.getButton());
-        this.stage.addActor(mainmenu.getButton());
+        pause_title = new MyLabel("Paused", 160, middleX, height*8/10);
+
+        pause = new MyTextButton("||", 40, width*24/25,height*93/100, 70, 75){
+            @Override
+            public void click(){
+                if(compareState(BaseScreen.STATE_RUN))
+                    pause();
+            }
+        };
+        unpause = new MyTextButton("Continue", textButtonSize, middleX, height*6.25f/10,
+                                   button_width, button_height){
+            @Override
+            public void click(){
+                if(compareState(BaseScreen.STATE_PAUSED))
+                    resume();
+            }
+        };
+        options = new MyTextButton("Options", textButtonSize, middleX, height*4.5f/10,
+                                   button_width, button_height){
+            @Override
+            public void click(){
+                if(compareState(BaseScreen.STATE_PAUSED))
+                    game.goToScreen(ScreenManager.OPTIONSSCREEN);
+            }
+        };
+        mainmenu = new MyTextButton("MainMenu", textButtonSize, middleX, height*2.75f/10,
+                                    button_width, button_height){;
+            @Override
+            public void click(){
+                if(compareState(BaseScreen.STATE_PAUSED))
+                    game.goToScreen(ScreenManager.MAINMENUSCREEN);
+            }
+        };
+
+        this.stage.addActor(pause.getActor());
+        this.stage.addActor(unpause.getActor());
+        this.stage.addActor(options.getActor());
+        this.stage.addActor(mainmenu.getActor());
     }
 
     @Override
     public void render(float delta){
         super.render(delta);
-
-        //Handle Buttons
-        if(this.compareState(BaseScreen.STATE_RUN)) {
-            if(this.pause.isChecked()){
-                this.pause.clicked();
-                this.pause();
-            }
-        }else if(this.compareState(BaseScreen.STATE_PAUSED)){
-            if(this.unpause.isChecked()){
-                this.unpause.clicked();
-                this.resume();
-            }else if(this.options.isChecked()){
-                this.options.clicked();
-                game.goToScreen(ScreenManager.OPTIONSSCREEN);
-            }else if(this.mainmenu.isChecked()){
-                this.mainmenu.clicked();
-                game.goToScreen(ScreenManager.MAINMENUSCREEN);
-            }
-        }
 
         //Updates
         if(this.compareState(BaseScreen.STATE_RUN)) {

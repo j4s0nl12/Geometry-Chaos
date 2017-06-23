@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.main.GeometryChaos;
-import com.mygdx.game.ui.FreeText;
+import com.mygdx.game.ui.MyLabel;
 import com.mygdx.game.utility.GameConstants;
 import com.mygdx.game.utility.Utility;
 
@@ -31,7 +31,7 @@ public class BaseScreen extends InputAdapter implements Screen{
     public InputMultiplexer iM;
     public Stage stage;
 
-    private static FreeText time;
+    private static MyLabel time;
     private static int hour;
     private static int min;
 
@@ -47,8 +47,7 @@ public class BaseScreen extends InputAdapter implements Screen{
         this.bgColor = new Color(.05f,.05f,.05f,1);
         this.iM = new InputMultiplexer();
         this.stage = new Stage(game.viewport);
-        this.time = new FreeText(GameConstants.getVirtualWidth()*24/25, GameConstants.getVirtualHeight()*49/50f,
-                                 40, "");
+        this.time = new MyLabel("", 40, GameConstants.getVirtualWidth()*.93f, GameConstants.getVirtualHeight()*.975f);
 
         this.sr = new ShapeRenderer();
         this.hour = 0;
@@ -130,7 +129,6 @@ public class BaseScreen extends InputAdapter implements Screen{
 
     @Override
     public void dispose() {
-        this.time.dispose();
     }
 
     public void setState(int state){

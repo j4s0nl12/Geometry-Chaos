@@ -1,17 +1,20 @@
 package com.mygdx.game.screens;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.managers.ScreenManager;
-import com.mygdx.game.ui.MyButton;
-import com.mygdx.game.ui.FreeText;
+import com.mygdx.game.ui.MyLabel;
+import com.mygdx.game.ui.MyTextButton;
 import com.mygdx.game.utility.GameConstants;
 
 public class MainMenuScreen extends BaseScreen{
 
-    private FreeText title;
-    private MyButton newGame;
-    private MyButton continueGame;
-    private MyButton options;
+    private MyLabel title;
+    private MyTextButton newGame;
+    private MyTextButton continueGame;
+    private MyTextButton options;
+    private MyTextButton editor;
 
     public MainMenuScreen(GeometryChaos gam){
         super(gam);
@@ -19,19 +22,52 @@ public class MainMenuScreen extends BaseScreen{
         float middleX = GameConstants.getVirtualWidth()/2;
         float newGameHeight = GameConstants.getVirtualHeight()*4f/10;
         float continueGameHeight = GameConstants.getVirtualHeight()*5.75f/10;
+        int textButtonSize = 53;
+        int buttonWidth = 300;
+        int buttonHeight = 175;
 
-        this.title = new FreeText(middleX, GameConstants.getVirtualHeight()*8.25f/10,
-                                  200, "Geometry Chaos");
-        this.newGame = new MyButton(middleX, newGameHeight,
-                                    300, 175, "New Game");
-        this.continueGame = new MyButton(middleX, continueGameHeight,
-                                         300, 175, "Continue");
-        this.options = new MyButton(middleX, GameConstants.getVirtualHeight()*2.25f/10,
-                                    300,175, "Options");
+        this.title = new MyLabel("Geomtry Chaos", 200, middleX,
+                                 GameConstants.getVirtualHeight()*8.25f/10);
 
-        this.stage.addActor(this.continueGame.getButton());
-        this.stage.addActor(this.newGame.getButton());
-        this.stage.addActor(this.options.getButton());
+        this.newGame = new MyTextButton("New Game", textButtonSize, middleX, newGameHeight,
+                                        buttonWidth, buttonHeight){
+            @Override
+            public void click(){
+                game.newGame();
+            }
+        };
+        this.continueGame = new MyTextButton("Continue", textButtonSize, middleX,
+                                             continueGameHeight, buttonWidth, buttonHeight){
+            @Override
+            public void click(){
+                game.goToScreen(ScreenManager.GAMESCREEN);
+            }
+        };
+        this.options = new MyTextButton("Options", textButtonSize, middleX,
+                                        GameConstants.getVirtualHeight()*2.25f/10,
+                                        buttonWidth, buttonHeight){
+            @Override
+            public void click(){
+                game.goToScreen(ScreenManager.OPTIONSSCREEN);
+            }
+        };
+
+        if(Gdx.app.getType() == Application.ApplicationType.Desktop){
+            this.editor = new MyTextButton("Editor", 35, GameConstants.getGameWorldX2()-100,
+                                           GameConstants.getGameWorldY() + 125f/2, 200,125){
+                @Override
+                public void click(){
+                    game.goToScreen(ScreenManager.EDITOR);
+                }
+            };
+        }
+
+        this.stage.addActor(this.continueGame.getActor());
+        this.stage.addActor(this.newGame.getActor());
+        this.stage.addActor(this.options.getActor());
+        if(this.editor != null){
+            this.stage.addActor(this.editor.getActor());
+        }
     }
 
     @Override
@@ -44,29 +80,16 @@ public class MainMenuScreen extends BaseScreen{
             this.continueGame.setDisabled(true);
         }
 
-        if (this.newGame.isChecked()) {
-            this.newGame.clicked();
-            game.newGame();
-        }else if(this.continueGame.isChecked()){
-            this.continueGame.clicked();
-            game.goToScreen(ScreenManager.GAMESCREEN);
-        }else if(this.options.isChecked()){
-            this.options.clicked();
-            game.goToScreen(ScreenManager.OPTIONSSCREEN);
-        }
-
         game.batch.begin();
         this.title.draw(game.batch);
         this.newGame.draw(game.batch);
-        if(!this.continueGame.isDisabled())
+        if(!this.continueGame.getIsDisabled())
             this.continueGame.draw(game.batch);
         this.options.draw(game.batch);
+        if(this.editor != null){
+            this.editor.draw(game.batch);
+        }
         this.displayTime(game.batch);
         game.batch.end();
-    }
-
-    @Override
-    public void dispose(){
-        this.title.dispose();
     }
 }

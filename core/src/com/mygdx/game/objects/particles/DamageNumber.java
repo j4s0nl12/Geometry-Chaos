@@ -2,11 +2,11 @@ package com.mygdx.game.objects.particles;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.ui.FreeText;
+import com.mygdx.game.ui.MyLabel;
 
 public class DamageNumber extends BaseParticle{
 
-    private FreeText text;
+    private MyLabel text;
     private float alpha;
     private float spd = 1f;
 
@@ -22,7 +22,7 @@ public class DamageNumber extends BaseParticle{
 
     public void init(Vector2 pos, int dmg){
         this.setVel(this.getVel().scl(this.spd));
-        this.text = new FreeText(pos.x, pos.y, 30, "-" + Integer.toString(dmg));
+        this.text = new MyLabel("-" + Integer.toString(dmg), 30, pos.x, pos.y);
         this.alpha = 1.0f;
     }
 

@@ -3,55 +3,62 @@ package com.mygdx.game.screens;
 import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.managers.PrefManager;
 import com.mygdx.game.managers.ScreenManager;
-import com.mygdx.game.ui.MyButton;
-import com.mygdx.game.ui.FreeText;
+import com.mygdx.game.ui.MyLabel;
+import com.mygdx.game.ui.MyTextButton;
 import com.mygdx.game.utility.GameConstants;
 
 public class OptionsScreen extends BaseScreen{
 
-    private FreeText title;
+    private MyLabel title;
 
-    private MyButton gameplay;
-    private MyButton sound;
-    private MyButton reset;
-    private MyButton back;
+    private MyTextButton gameplay;
+    private MyTextButton sound;
+    private MyTextButton reset;
+    private MyTextButton back;
 
     public OptionsScreen(final GeometryChaos gam){
         super(gam);
-        this.title = new FreeText(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*8/10,
-                                  160, "Options");
-        this.gameplay = new MyButton(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*6/10,
-                                   280, 175, "Gameplay");
-        this.sound = new MyButton(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*4/10,
-                                280, 175, "Sound");
-        this.reset = new MyButton(GameConstants.getVirtualWidth()*4/5, GameConstants.getVirtualHeight()*2/10,
-                                  200, 125, "Default");
-        this.back = new MyButton(GameConstants.getVirtualWidth()/2, GameConstants.getVirtualHeight()*2/10,
-                               200, 125, "Back");
 
-        this.stage.addActor(this.gameplay.getButton());
-        this.stage.addActor(this.sound.getButton());
-        this.stage.addActor(this.reset.getButton());
-        this.stage.addActor(this.back.getButton());
+        float width = GameConstants.getVirtualWidth();
+        float middleX = width/2;
+        float height = GameConstants.getVirtualHeight();
+
+        this.title = new MyLabel("Options", 160, middleX, height*8/10);
+
+        this.gameplay = new MyTextButton("Gameplay", 49, middleX, height*6/10,280, 175){
+            @Override
+            public void click(){
+                game.goToScreen(ScreenManager.GAMEOPTIONSCREEN);
+            }
+        };
+        this.sound = new MyTextButton("Sound", 49, middleX, height*4/10, 280, 175){
+            @Override
+            public void click(){
+                game.goToScreen(ScreenManager.SOUNDSCREEN);
+            }
+        };
+        this.reset = new MyTextButton("Default", 35, width*4/5, height*2/10, 200, 125){
+            @Override
+            public void click(){
+                PrefManager.defaults();
+            }
+        };
+        this.back = new MyTextButton("Back", 35, width/2, height*2/10, 200, 125){
+            @Override
+            public void click(){
+                game.goBack();
+            }
+        };
+
+        this.stage.addActor(this.gameplay.getActor());
+        this.stage.addActor(this.sound.getActor());
+        this.stage.addActor(this.reset.getActor());
+        this.stage.addActor(this.back.getActor());
     }
 
     @Override
     public void render(float delta){
         super.render(delta);
-
-        if(this.gameplay.isChecked()){
-            this.gameplay.clicked();
-            game.goToScreen(ScreenManager.GAMEOPTIONSCREEN);
-        }else if(this.sound.isChecked()){
-            this.sound.clicked();
-            game.goToScreen(ScreenManager.SOUNDSCREEN);
-        }else if(this.reset.isChecked()){
-            this.reset.clicked();
-            PrefManager.defaults();
-        }else if(this.back.isChecked()){
-            this.back.clicked();
-            game.goBack();
-        }
 
         game.batch.begin();
         this.title.draw(game.batch);

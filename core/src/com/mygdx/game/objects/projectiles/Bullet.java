@@ -43,7 +43,7 @@ public class Bullet extends BaseProjectile {
         GameObjectManager.add(tmp1);
         GameObjectManager.add(tmp2);
     }
-
+    /*
     @Override
     public void collideParticleEffects(Vector2 collidePos){
         int numParticles = MathUtils.random(4,6);
@@ -52,4 +52,5 @@ public class Bullet extends BaseProjectile {
             GameObjectManager.add(new RainbowParticle(collidePos.cpy(), dir.cpy(), 2000L));
         }
     }
+    */
 }

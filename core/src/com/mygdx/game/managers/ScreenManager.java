@@ -1,10 +1,13 @@
 package com.mygdx.game.managers;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.screens.BaseScreen;
 import com.mygdx.game.screens.GameOptionScreen;
 import com.mygdx.game.screens.GameScreen;
+import com.mygdx.game.screens.LevelEditor;
 import com.mygdx.game.screens.MainMenuScreen;
 import com.mygdx.game.screens.OptionsScreen;
 import com.mygdx.game.screens.SoundScreen;
@@ -19,6 +22,7 @@ public class ScreenManager {
     public final static int OPTIONSSCREEN = 2;
     public final static int GAMEOPTIONSCREEN = 3;
     public final static int SOUNDSCREEN = 4;
+    public final static int EDITOR = 5;
 
     private Array<BaseScreen> screenList;
 
@@ -27,6 +31,7 @@ public class ScreenManager {
     private BaseScreen options;
     private BaseScreen gameOptions;
     private BaseScreen sound;
+    private BaseScreen editor;
 
     public ScreenManager(final GeometryChaos gam){
         game = gam;
@@ -36,6 +41,9 @@ public class ScreenManager {
         options = new OptionsScreen(game);
         gameOptions = new GameOptionScreen(game);
         sound = new SoundScreen(game);
+        if(Gdx.app.getType() == Application.ApplicationType.Desktop){
+            editor = new LevelEditor(game);
+        }
 
         screenList = new Array();
 
@@ -72,6 +80,9 @@ public class ScreenManager {
                 break;
             case SOUNDSCREEN:
                 tmp = sound;
+                break;
+            case EDITOR:
+                tmp = editor;
                 break;
             default:
                 Utility.print("ScreenManager","Error: Unknown screen index: '" + screenIdx + "'.");

@@ -13,7 +13,7 @@ import com.mygdx.game.utility.GameConstants;
 public class MyCheckBox {
 
     private CheckBox box;
-    private FreeText name;
+    private MyLabel name;
     private String key;
 
     public MyCheckBox(float x, float y, String name, String key){
@@ -29,7 +29,7 @@ public class MyCheckBox {
         this.box.setScale(scale);
         this.box.setPosition(x+width/2-this.box.getWidth()*1.5f,y-this.box.getHeight()*1.5f);
 
-        this.name = new FreeText(x - width/2, y, textSize, name);
+        this.name = new MyLabel(name, textSize, x - width/2, y);
 
         this.box.addListener(new ChangeListener() {
             @Override

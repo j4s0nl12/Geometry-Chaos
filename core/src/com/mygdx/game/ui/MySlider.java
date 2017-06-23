@@ -2,6 +2,7 @@ package com.mygdx.game.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.managers.AssetManager;
@@ -11,8 +12,8 @@ import com.mygdx.game.utility.GameConstants;
 public class MySlider {
 
     private Slider slider;
-    private FreeText name;
-    private FreeText val;
+    private MyLabel name;
+    private MyLabel val;
 
     private String key;
 
@@ -39,10 +40,10 @@ public class MySlider {
         this.slider.setPosition(x - width/2,y);
         this.slider.setAnimateDuration(.1f);
 
-        this.name = new FreeText(x - width/2, y + 50, textSize, name);
+        this.name = new MyLabel(name, textSize, x - width/2, y + 50);
         this.name.setX(this.name.getX() + this.name.getWidth()/2);
 
-        this.val = new FreeText(x + width/2, y + 50, textSize, String.format("%.2f",slider.getValue()));
+        this.val = new MyLabel(String.format("%.2f",slider.getValue()), textSize, x + width/2, y + 50);
         this.val.setX(this.val.getX() - this.val.getWidth()/2);
 
         this.slider.addListener(new ChangeListener() {
