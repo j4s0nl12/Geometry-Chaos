@@ -39,16 +39,8 @@ public class LevelParser {
         state = FREE;
     }
 
-    public TileMap load(TileMap map){
+    public TileMap load(TileMap map, String filename){
         state = LOADING;
-
-        JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory(PATH);
-        int returnVal = fc.showOpenDialog(new JFrame());
-        String filename = null;
-        if(returnVal == JFileChooser.APPROVE_OPTION){
-            filename = fc.getSelectedFile().getName();
-        }
 
         if(filename != null){
             FileHandle file = Gdx.files.internal(DIR + filename);
@@ -77,6 +69,20 @@ public class LevelParser {
         }
         state = FREE;
         return map;
+    }
+
+    public TileMap load(TileMap map){
+        state = LOADING;
+
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(PATH);
+        int returnVal = fc.showOpenDialog(new JFrame());
+        String filename = null;
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            filename = fc.getSelectedFile().getName();
+        }
+
+        return this.load(map, filename);
     }
 
 

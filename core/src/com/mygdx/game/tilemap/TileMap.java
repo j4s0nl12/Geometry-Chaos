@@ -106,4 +106,8 @@ public class TileMap {
     public int getRow(){
         return this.row;
     }
+
+    public Array<Array<Tile>> getTiles(){
+        return this.tiles;
+    }
 }

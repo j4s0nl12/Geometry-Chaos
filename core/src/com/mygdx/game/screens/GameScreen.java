@@ -2,11 +2,16 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.main.GeometryChaos;
 import com.mygdx.game.managers.GameObjectManager;
 import com.mygdx.game.managers.PrefManager;
 import com.mygdx.game.managers.ScreenManager;
 import com.mygdx.game.objects.enemies.Dummy;
+import com.mygdx.game.objects.player.Player;
+import com.mygdx.game.tilemap.LevelParser;
+import com.mygdx.game.tilemap.Tile;
+import com.mygdx.game.tilemap.TileMap;
 import com.mygdx.game.ui.MyLabel;
 import com.mygdx.game.ui.MyTextButton;
 import com.mygdx.game.utility.GameConstants;
@@ -25,13 +30,23 @@ public class GameScreen extends BaseScreen{
     public GameScreen(GeometryChaos gam) {
         super(gam);
         gom = new GameObjectManager();
-        gom.addPlayer(GameConstants.getVirtualWidth()/2,GameConstants.getVirtualHeight()/2);
 
-        //Enemies
-        //gom.add(new SuperDummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
-        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
-        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()*2/3, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*2.5f/5), new Vector2()));
-        gom.add(new Dummy(new Vector2(GameConstants.getVirtualWidth()/2, GameConstants.getGameWorldY()+GameConstants.getGameWorldHeight()*4/5), new Vector2()));
+        TileMap map = new TileMap(GameConstants.getGameWorldWidth(), GameConstants.getGameWorldHeight(), 100);
+        LevelParser lp = new LevelParser();
+        lp.load(map);
+        //lp.load(map, "test.txt");
+
+        for(Array<Tile> a : map.getTiles()){
+            for(Tile t : a){
+                if(t.getObject() != null){
+                    if(t.getObject().getClass() == Player.class){
+                        gom.addPlayer(t.getObject().getPosX(), t.getObject().getPosY());
+                    }else{
+                        gom.add(t.getObject());
+                    }
+                }
+            }
+        }
 
         for(Actor a : gom.getPlayerController().getActors()){
             this.stage.addActor(a);

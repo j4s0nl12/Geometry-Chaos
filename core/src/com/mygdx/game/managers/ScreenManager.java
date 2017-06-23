@@ -37,7 +37,7 @@ public class ScreenManager {
         game = gam;
 
         mainmenu = new MainMenuScreen(game);
-        gamescreen = new GameScreen(game);
+        //gamescreen = new GameScreen(game);
         options = new OptionsScreen(game);
         gameOptions = new GameOptionScreen(game);
         sound = new SoundScreen(game);
